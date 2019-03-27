@@ -81,7 +81,16 @@ export class Direct extends DriverProvider {
                   '. Run \'webdriver-manager update\' to download binaries.');
         }
 
-        let chromeService = new ChromeServiceBuilder(chromeDriverFile).build();
+
+        let chromeSvcBuilder = new ChromeServiceBuilder(chromeDriverFile);
+
+        if (this.config_.logLevel === "DEBUG") {
+          chromeSvcBuilder.enableVerboseLogging();
+          chromeSvcBuilder.loggingTo("webdriver.log");
+        }
+
+        let chromeService = chromeSvcBuilder.build();
+
         // driver = ChromeDriver.createSession(new Capabilities(this.config_.capabilities),
         // chromeService);
         // TODO(ralphj): fix typings
